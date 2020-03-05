@@ -15,11 +15,11 @@
                                 "cljs-skeleton:activate"
                                 #(info! "CLJS Plugin Activated!")))))
 
-(defn deactivate [state])
+(defn deactivate [state]
+  (.dispose ^js @subscriptions))
 
 (defn ^:dev/before-load reset-subs []
-  (deactivate @atom-state)
-  (.dispose ^js @subscriptions))
+  (deactivate @atom-state))
 
 (defn ^:dev/after-load re-activate []
   (reset! subscriptions (CompositeDisposable.))
